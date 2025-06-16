@@ -76,3 +76,4 @@ jobs:
           app-name: 'articlecmsapp'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
+          

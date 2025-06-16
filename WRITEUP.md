@@ -1,54 +1,24 @@
+Deployment Option Analysis: VM vs App Service
+    Virtual Machine (VM)
+        Cost: Generally more expensive due to hourly compute charges, licensing fees, and always-on infrastructure. You also need to manually manage startup and shutdown to optimize cost.
 
-# writeup.md
+        Scalability: Requires manual setup for scaling, such as configuring load balancers and creating VM scale sets. Not ideal for quick or automatic scaling.
 
-## 1. Resource Analysis
+        Availability: High availability is achievable but requires manual configuration, such as multiple VMs across regions and custom failover strategies.
 
-| Criteria         | Virtual Machine (VM)                                                                                        | App Service (Web App)                                                                                     |
-| ---------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| **Cost**         | Higher ongoing costs due to VM size, OS licensing, and manual scaling. You pay for up time, not just usage. | More cost-effective for web apps; flexible pricing tiers; only pay for what you use; scaling is built-in. |
-| **Scalability**  | Manual scaling required (need to configure/load-balance VMs yourself).                                      | Automatic scaling available, including vertical and horizontal scaling with just a few clicks.            |
-| **Availability** | Requires manual setup of redundancy, backups, and monitoring.                                               | High availability and built-in redundancy; Microsoft manages failover and health for you.                 |
-| **Workflow**     | More control, but more maintenance: you must patch, update, and monitor OS/app.                             | Simple deployment workflow; integrates with GitHub Actions and DevOps; no OS maintenance needed.          |
+        Workflow: Offers full control over the environment, including the operating system and installed software. However, it also requires more effort to manage dependencies, web servers, security patches, and updates.
 
----
+    App Service
+        Cost: More cost-efficient, especially for development and small- to medium-scale applications. Offers free and shared tiers for testing.
 
-## 2. Solution Choice & Justification
+        Scalability: Auto-scaling is built-in and easy to configure. Scaling up or out can be done with a few clicks or through automation.
 
-For this project, I chose to deploy the Article CMS using **Azure App Service** instead of a Virtual Machine.
+        Availability: High availability is provided by default, with built-in load balancing and a guaranteed SLA.
 
-* **Reasoning**: App Service is specifically designed for web applications, offering easier deployment, scaling, and monitoring out of the box. It eliminates the need for manual OS patching, backups, and scaling tasks that VMs require.
-* **Cost and Simplicity**: It is more cost-effective for a typical web app, supports auto-scaling, and the workflow (CI/CD, rollback, diagnostics) is much simpler and less error-prone compared to managing a VM.
+        Workflow: Simple deployment options such as ZIP deploy, GitHub Actions, or Azure CLI. Requires minimal configuration and maintenance.
 
----
+Chosen Solution: App Service
+    I chose Azure App Service to deploy the CMS application because it provides a fast, efficient, and cost-effective way to deploy Python applications. It offers a streamlined deployment process with minimal setup and maintenance requirements. Auto-scaling and integrated logging make it a practical choice for most use cases in development and production environments.
 
-## 3. How the App Would Change if the Decision Was Different
-
-* If I needed **greater control** over the OS, network, or had to install custom software dependencies (e.g., for legacy apps), I might choose a VM instead.
-* **App Service** works best for Python, Node, .NET, and similar web apps, but a VM is better suited if you require a custom stack or need to support workloads that can’t be run in a Platform-as-a-Service environment.
-* If my application required running background services or scheduled tasks outside the typical web server model, using a VM (or combining App Service with Azure Functions/VM) might be necessary.
-
-**Infrastructure Needs If Requirements Change:**
-
-* If high performance or OS-level customization is needed, I would switch to a VM and update my deployment scripts (e.g., add Ansible or Bash scripts).
-* If security needs change (such as custom firewalls or VPN), a VM or Virtual Network integration might be required.
-
----
-
-## 4. Summary Table
-
-| Requirement        | App Service            | VM                        |
-| ------------------ | ---------------------- | ------------------------- |
-| Ease of deployment | Easy                   | Moderate/Complex          |
-| Scaling            | Automatic/Configurable | Manual                    |
-| Maintenance        | Minimal (Microsoft)    | Full (User)               |
-| Cost               | Lower for web apps     | Higher for most workloads |
-| Control            | Less                   | Full                      |
-
----
-
-## 5. References
-
-* [Microsoft: App Service vs. Virtual Machines](https://learn.microsoft.com/en-us/azure/app-service/overview)
-* [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/)
-* [Best practices for cloud apps](https://learn.microsoft.com/en-us/azure/architecture/best-practices/web-app)
-
+Conditions for Choosing a VM Instead
+    I would consider deploying to a Virtual Machine if the application required a custom server environment, system-level dependencies, or advanced control over the operating system and infrastructure. For example, if the application needed a background service or non-standard configuration that App Service cannot support, a VM would be more suitable. Additionally, in enterprise scenarios with strict networking or security requirements, a VM setup may be necessary.

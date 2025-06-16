@@ -22,7 +22,7 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.13'
 
       - name: Install system dependencies 
         run: |
@@ -73,14 +73,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_426E2E5E7A354C61A36D2D9AC9BFEE83 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D7838140312E4BE6A6737CA8D2A516A5 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_68861AAA7C4E440884B8B317A8B7F930 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0b8b0405169d49d19aa4c92778f8154e }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_96029b417bfa4d9fa61498575039d51b }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2d2474d8c2844b219c0e16cc1c46a8b8 }}
+
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'udacitycms1'
+          app-name: 'articlecmsapp'
           slot-name: 'Production'
           

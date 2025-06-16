@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - articlecmsapp
+name: Build and deploy Python app to Azure Web App - udacitycms1
 
 on:
   push:
@@ -22,7 +22,12 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.10'
+
+      - name: Install system dependencies 
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unixodbc-dev gcc g++
 
       - name: Create and start virtual environment
         run: |
@@ -68,14 +73,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6991AA0C9A5841E48AF54B87B1171232 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6D3C09F627A4BB7B38AE12D8BBE0CEA }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3C53FC8DFAE24BA7AC4AC55D542B5D9F }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_426E2E5E7A354C61A36D2D9AC9BFEE83 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D7838140312E4BE6A6737CA8D2A516A5 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_68861AAA7C4E440884B8B317A8B7F930 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'articlecmsapp'
+          app-name: 'udacitycms1'
           slot-name: 'Production'
           
